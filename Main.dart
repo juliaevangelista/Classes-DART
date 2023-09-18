@@ -1,42 +1,53 @@
 class Conta {
-  String titular;
-  double saldo;
+  String _titular;
+  double _saldo;
 
-  Conta(this.titular, this.saldo);
+  Conta(this._titular, this._saldo);
+
+  String get titular => _titular;
+
+  set titular(String novoTitular) {
+    if (novoTitular.isNotEmpty) {
+      _titular = novoTitular;
+    }
+  }
+
+  double get saldo => _saldo;
+
+  void depositar(double valor) {
+    if (valor > 0) {
+      _saldo += valor;
+      print("Depósito de R\$ $valor realizado com sucesso.");
+    } else {
+      print("Valor inválido para depósito.");
+    }
+  }
 
   bool sacar(double valor) {
-    if (valor > 0 && valor <= saldo) {
-      saldo -= valor;
+    if (valor > 0 && valor <= _saldo) {
+      _saldo -= valor;
+      print("Saque de R\$ $valor realizado com sucesso.");
       return true;
     } else {
-      print("Saldo Insuficiente");
+      print("Saldo insuficiente ou valor inválido para saque.");
       return false;
     }
   }
 
-  void depositar(double valor) {
-    if (valor > 0) {
-      saldo += valor;
-      print("Depósito de $valor realizado com sucesso.");
-    } else {
-      print("Valor inválido para depósito");
-    }
-  }
-
   bool transferir(double valor, Conta destino) {
-    if (valor > 0 && valor <= saldo) {
-      saldo -= valor;
+    if (valor > 0 && valor <= _saldo) {
+      _saldo -= valor;
       destino.depositar(valor);
-      print("Transferência de $valor para a conta de ${destino.titular} realizada com sucesso");
+      print("Transferência de R\$ $valor para a conta de ${destino.titular} realizada com sucesso.");
       return true;
     } else {
-      print("Saldo Insuficiente");
+      print("Saldo insuficiente ou valor inválido para transferência.");
       return false;
     }
   }
 
   void mostrarSaldo() {
-    print("Saldo da conta de $titular: R\$ $saldo");
+    print("Saldo da conta de $_titular: R\$ $_saldo");
   }
 }
 
